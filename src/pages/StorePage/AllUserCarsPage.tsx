@@ -1,23 +1,27 @@
-import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import "./index.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../redux/store";
-import { fetchPosts } from "../../redux/slices/posts";
+import { fetchPosts, fetchRemovePosts } from "../../redux/slices/posts";
 import Spiner from "../../components/Spiner";
 import { Post, UsersState } from "../../types";
+import { userId } from "../../redux/slices/auth";
 
-const StorePage = () => {
+const AllUserCarsPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { posts }: any = useSelector<UsersState>((state) => state.posts);
   const isPostsLoading = posts.status === "loading";
-  const { brand } = useParams();
-  console.log(posts);
+  const isUserId = useSelector(userId);
 
   useEffect(() => {
-    dispatch(fetchPosts(brand as string));
+    dispatch(fetchPosts(isUserId));
   }, []);
+
+  const onRemovePost = (id: string) => {
+    dispatch(fetchRemovePosts(id));
+  };
+
   return (
     <>
       <div className="store_container">
@@ -51,7 +55,12 @@ const StorePage = () => {
                     >
                       <button className="card_btn outline">DETAILS</button>
                     </Link>
-                    <button className="card_btn fill">BUY NOW</button>
+                    <button
+                      onClick={() => onRemovePost(obj._id)}
+                      className="card_btn delete"
+                    >
+                      DELETE
+                    </button>
                   </div>
                 </div>
               </div>
@@ -63,4 +72,4 @@ const StorePage = () => {
   );
 };
 
-export default StorePage;
+export default AllUserCarsPage;

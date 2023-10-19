@@ -1,27 +1,47 @@
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import { LinkContainer } from "react-router-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { selectIsAuth, logout } from "../redux/slices/auth";
+import { useSelector, useDispatch } from "react-redux";
+import { AppDispatch } from "../redux/store";
 
 function NavScrollExample() {
+  const dispatch = useDispatch<AppDispatch>();
+  const isAuth = useSelector(selectIsAuth);
+
+  const onClickLogout = () => {
+    if (window.confirm("Are you sure?")) {
+      dispatch(logout());
+      window.localStorage.removeItem("token");
+    }
+  };
   return (
     <Navbar className="header" bg="primary" variant="dark">
       <Container>
         <LinkContainer to={"/"}>
-          <Navbar.Brand>Home</Navbar.Brand>
+          <Button variant="dark">Car Store Home</Button>
         </LinkContainer>
-        <Nav className="me-auto">
-          <LinkContainer to={"/about"}>
-            <Nav.Link>About</Nav.Link>
+        {isAuth ? (
+          <>
+            <LinkContainer to={"/cabinet"}>
+              <Button className="cabinetButton" variant="warning">
+                Your cabinet
+              </Button>
+            </LinkContainer>
+            <LinkContainer to={"/"}>
+              <Button variant="danger" onClick={onClickLogout}>
+                Logout
+              </Button>
+            </LinkContainer>
+          </>
+        ) : (
+          <LinkContainer to={"/login"}>
+            <Button variant="success">Login</Button>
           </LinkContainer>
-        </Nav>
-        <LinkContainer to={"/login"}>
-          <Button variant="success">Sign In</Button>
-        </LinkContainer>
+        )}
       </Container>
     </Navbar>
   );

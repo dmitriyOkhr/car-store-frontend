@@ -4,22 +4,29 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
+  min-width: 100%;
 }
 
 .slider {
   margin-top: 12px;
 }
 
+.price {
+  border-radius: 7px;
+  background-color: blue;
+}
+
 .main_info_card {
+  color: white;
   width: 650px;
   height: 400px;
-  background-color: rgb(121, 120, 118);
   margin-top: 12px;
   border-radius: 7px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  background: rgba(0, 0, 0, 0.4);
 }
 .info_container {
   width: 600px;
@@ -30,31 +37,25 @@
   justify-content: space-between;
 }
 
-.description_info_card {
+.accardion_container {
   width: 1323px;
-  height: 400px;
-  background-color: rgb(121, 120, 118);
   margin-top: 12px;
   margin-bottom: 12px;
   border-radius: 7px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.description_container {
-  width: 43%;
-  height: 95%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.info_left {
   text-align: left;
-  border-radius: 7px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+}
+
+.buy_container {
+  color: white;
+  margin-left: 80%;
+  margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+  .main_info_card {
+    width: 90%; /* Змінюємо ширину на менших екранах */
+    height: auto; /* Дозволяємо висоті адаптуватися */
+    max-width: none; /* Забороняємо максимальну ширину на менших екранах */
+    margin-top: 6px; /* Менше верхнього марджину */
+  }
 }

@@ -1,48 +1,67 @@
 import "./index.css";
+import { useState, useEffect } from "react";
 import SimpleImageSlider from "react-simple-image-slider";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Accordion from "../../components/Accordion";
+import Spiner from "../../components/Spiner";
+import { useParams } from "react-router-dom";
+import axios from "../../axios";
+import { Post } from "../../types";
 
 const DetailsPage = () => {
-  const images = [
-    {
-      url: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/1200px-GoldenGateBridge-001.jpg",
-    },
-    {
-      url: "https://cdn.britannica.com/s:800x450,c:crop/35/204435-138-2F2B745A/Time-lapse-hyper-lapse-Isle-Skye-Scotland.jpg",
-    },
-    {
-      url: "https://static2.tripoto.com/media/filter/tst/img/735873/TripDocument/1537686560_1537686557954.jpg",
-    },
-    {
-      url: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Palace_of_Fine_Arts_%2816794p%29.jpg/1200px-Palace_of_Fine_Arts_%2816794p%29.jpg",
-    },
-    {
-      url: "https://i.natgeofe.com/n/f7732389-a045-402c-bf39-cb4eda39e786/scotland_travel_4x3.jpg",
-    },
-    {
-      url: "https://www.tusktravel.com/blog/wp-content/uploads/2020/07/Best-Time-to-Visit-Darjeeling-for-Honeymoon.jpg",
-    },
-    {
-      url: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Palace_of_Fine_Arts_%2816794p%29.jpg/1200px-Palace_of_Fine_Arts_%2816794p%29.jpg",
-    },
-    {
-      url: "https://images.ctfassets.net/bth3mlrehms2/6Ypj2Qd3m3jQk6ygmpsNAM/61d2f8cb9f939beed918971b9bc59bcd/Scotland.jpg?w=750&h=422&fl=progressive&q=50&fm=jpg",
-    },
-    {
-      url: "https://www.oyorooms.com/travel-guide/wp-content/uploads/2019/02/summer-7.jpg",
-    },
-  ];
+  const { id } = useParams();
+  const [data, setData] = useState<Post>();
+  const defaultValue = {
+    user: "",
+    brand: "",
+    model: "",
+    price: "",
+    engine: "",
+    drivetrain: "",
+    transmission: "",
+    exterior: "",
+    interior: "",
+    year: "",
+    imageUrls: [],
+    interiorFeatures: "",
+    exteriorFeatures: "",
+    functional: "",
+    safetyConvenience: "",
+  };
+  const myData = data ? data : defaultValue;
+  const [isLoading, setIsLoading] = useState(true);
+  const images: Object[] | undefined = data?.imageUrls?.map((url: string) => {
+    return { url: `http://localhost:5555/${url}` };
+  });
+  console.log(images);
+
+  useEffect(() => {
+    axios
+      .get(`/posts/${id}`)
+      .then((res) => {
+        setData(res.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.warn(err);
+        alert("Проблема при загрузці");
+      });
+  }, []);
+  console.log(data);
+
+  if (isLoading) {
+    return (
+      <div className="container_spiner">
+        <Spiner />
+      </div>
+    );
+  }
 
   return (
     <>
       <div className="details_container">
         <div className="slider">
           <SimpleImageSlider
-            width={650}
+            width={690}
             height={400}
             images={images}
             showBullets={true}
@@ -51,85 +70,46 @@ const DetailsPage = () => {
           />
         </div>
         <div className="main_info_card">
-          <h1>2023 F-150 LIGHTNING</h1>
-          <h2>$88,869</h2>
+          <h1>
+            {data?.brand.toUpperCase()} {data?.model.toUpperCase()}
+          </h1>
+          <h2 className="price">{data?.price}</h2>
+          <div className="info_container">
+            <h3>Year:</h3>
+            <h4>{data?.year}</h4>
+          </div>
           <div className="info_container">
             <h3>Engine:</h3>
-            <h4>Dual eMotor </h4>
+            <h4>{data?.engine}</h4>
           </div>
           <div className="info_container">
             <h3>Drivetrain:</h3>
-            <h4>4x4</h4>
+            <h4>{data?.drivetrain}</h4>
           </div>
           <div className="info_container">
             <h3>Transmission:</h3>
-            <h4>Single-Speed Transmission</h4>
+            <h4>{data?.transmission}</h4>
           </div>
           <div className="info_container">
             <h3>Exterior:</h3>
-            <h4>Azure Gray Metallic Tri-Coat</h4>
+            <h4>{data?.exterior}</h4>
           </div>
           <div className="info_container">
             <h3>Interior:</h3>
-            <h4>Black</h4>
-          </div>
-          <div className="info_container">
-            <h3>Package:</h3>
-            <h4>LARIAT 511A</h4>
+            <h4>{data?.interior}</h4>
           </div>
         </div>
-        <div className="description_info_card">
-          <div className="description_container">
-            <div className="info_left">
-              <h3>Package:</h3>
-              <h4>LARIAT 511A</h4>
-            </div>
-            <div className="info_left">
-              <h3>Package:</h3>
-              <h4>LARIAT 511A</h4>
-            </div>
-            <div className="info_left">
-              <h3>Package:</h3>
-              <h4>LARIAT 511A</h4>
-            </div>
-            <div className="info_left">
-              <h3>Package:</h3>
-              <h4>LARIAT 511A</h4>
-            </div>
-            <div className="info_left">
-              <h3>Package:</h3>
-              <h4>LARIAT 511A</h4>
-            </div>
-            <div className="info_left">
-              <h3>Package:</h3>
-              <h4>LARIAT 511A</h4>
-            </div>
-          </div>
-
-          <div className="description_container">
-            <div className="info_left">
-              <h3>Package:</h3>
-              <h4>LARIAT 511A</h4>
-            </div>
-            <div className="info_left">
-              <h3>Package:</h3>
-              <h4>LARIAT 511A</h4>
-            </div>
-            <div className="info_left">
-              <h3>Package:</h3>
-              <h4>LARIAT 511A</h4>
-            </div>
-            <div className="info_left">
-              <h3>Package:</h3>
-              <h4>LARIAT 511A</h4>
-            </div>
-            <div className="info_left">
-              <h3>Package:</h3>
-              <h4>LARIAT 511A</h4>
-            </div>
-            <h2>$88,869</h2>
-            <button className="card_btn fill">BUY NOW</button>
-          </div>
+        <div className="accardion_container">
+          <Accordion
+            interiorFeatures={myData.interiorFeatures}
+            exteriorFeatures={myData.exteriorFeatures}
+            functional={myData.functional}
+            safetyConvenience={myData.safetyConvenience}
+          ></Accordion>
+        </div>
+        <div className="buy_container">
+          <h2>{data?.price}</h2>
+          <button className="card_btn fill">BUY NOW</button>
         </div>
       </div>
     </>

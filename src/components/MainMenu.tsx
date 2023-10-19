@@ -10,22 +10,22 @@ const MainMenu = () => {
     <>
       <div className="ag-format-container">
         <div className="ag-courses_box">
-          <div className="ag-courses_item" onClick={() => onClick("cars")}>
+          <div className="ag-courses_item" onClick={() => onClick("ford")}>
             <div className="ag-courses-item_link">
               <div className="ag-courses-item_bg"></div>
 
-              <div className="ag-courses-item_title">Cars</div>
+              <div className="ag-courses-item_title">FORD</div>
             </div>
           </div>
 
           <div
             className="ag-courses_item"
-            onClick={() => onClick("motorcycles")}
+            onClick={() => onClick("mercedes-benz")}
           >
             <div className="ag-courses-item_link">
               <div className="ag-courses-item_bg"></div>
 
-              <div className="ag-courses-item_title">Motorcycles</div>
+              <div className="ag-courses-item_title">MERCEDES-BENZ </div>
             </div>
           </div>
 
@@ -45,19 +45,19 @@ const MainMenu = () => {
             </div>
           </div>
 
-          <div className="ag-courses_item" onClick={() => onClick("volvo")}>
+          <div className="ag-courses_item" onClick={() => onClick("honda")}>
             <div className="ag-courses-item_link">
               <div className="ag-courses-item_bg"></div>
 
-              <div className="ag-courses-item_title">VOLVO</div>
+              <div className="ag-courses-item_title">HONDA</div>
             </div>
           </div>
 
-          <div className="ag-courses_item" onClick={() => onClick("man")}>
+          <div className="ag-courses_item" onClick={() => onClick("toyota")}>
             <div className="ag-courses-item_link">
               <div className="ag-courses-item_bg"></div>
 
-              <div className="ag-courses-item_title">MAN</div>
+              <div className="ag-courses-item_title">TOYOTA</div>
             </div>
           </div>
         </div>
